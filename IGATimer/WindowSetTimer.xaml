@@ -1,0 +1,26 @@
+﻿<Window x:Class="IGATimer.WindowSetTimer"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:IGATimer"
+        mc:Ignorable="d"
+        Title="Zaman Ayarla" Height="250" Width="400" WindowStartupLocation="CenterScreen">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1*"/>
+            <RowDefinition/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+
+        <Label Grid.Row="0" Grid.Column="0" Content="Saat" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="40" FontFamily="Century Gothic"></Label>
+        <Label Grid.Row="0" Grid.Column="1" Content="Dakika" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="40" FontFamily="Century Gothic"></Label>
+        <local:NumericUpDown x:Name="nudHours" VerticalAlignment="Center" Grid.Row="1" Grid.Column="0"></local:NumericUpDown>
+        <local:NumericUpDown x:Name="nudMinutes" VerticalAlignment="Center" Grid.Row="1" Grid.Column="1"></local:NumericUpDown>
+        <Button Grid.Row="2" Grid.ColumnSpan="2" Name="btnSetTimer" Content="Ayarla" FontSize="30"  Background="White" BorderBrush="Black" Click="btnSetTimer_Click"></Button>
+    </Grid>
+</Window>

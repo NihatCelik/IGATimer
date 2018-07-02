@@ -1,0 +1,91 @@
+﻿<Window x:Class="IGATimer.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d"
+        ResizeMode="NoResize" WindowStartupLocation="CenterScreen" 
+        WindowStyle="None" AllowsTransparency="True" 
+        MouseDown="Window_MouseDown"
+        Title="MainWindow" Height="460" Width="800">
+
+    <Window.Resources>
+        <Style x:Key="MyButton" TargetType="Button">
+            <Setter Property="OverridesDefaultStyle" Value="True" />
+            <Setter Property="Cursor" Value="Hand" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Name="border" BorderThickness="1" BorderBrush="Transparent" Background="{TemplateBinding Background}">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Opacity" Value="0.8" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
+
+    <Window.Background>
+        <ImageBrush x:Name="imgBrush" Stretch="Fill"></ImageBrush>
+    </Window.Background>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition />
+            <RowDefinition Height="3*" />
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+
+
+        <Grid Grid.Row="0">
+            <StackPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Top">
+                <Button Name="btnMinimize" Height="24" Width="24" BorderBrush="Transparent" Background="Transparent"  Click="btnMinimize_Click"  Style="{StaticResource MyButton}">
+                    <Image Name="imgMinimize" Source="images/icon/minimize-white.png"></Image>
+                </Button>
+                <Button Name="btnMaximize" Height="24" Width="24" BorderBrush="Transparent" Background="Transparent" Click="btnMaximize_Click"  Style="{StaticResource MyButton}">
+                    <Image Name="imgMaximize" Source="images/icon/expand-button-white.png"></Image>
+                </Button>
+                <Button Name="btnClose" Height="24" Width="24" BorderBrush="Transparent" Background="Transparent"  Click="btnClose_Click"  Style="{StaticResource MyButton}">
+                    <Image Name="imgClose" Source="images/icon/cancel-button-white.png"></Image>
+                </Button>
+            </StackPanel>
+        </Grid>
+
+        <Grid Grid.Row="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="3*" />
+                <RowDefinition />
+            </Grid.RowDefinitions>
+
+            <Viewbox Grid.Row="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                <Label HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Content="00:00:00" Name="lblRemainingTime" FontFamily="Century Gothic" Foreground="White" FontWeight="Bold" Background="{x:Null}">
+                    <Label.Effect>
+                        <DropShadowEffect Direction="-90" BlurRadius="1" Opacity="0.6" ShadowDepth="1" />
+                    </Label.Effect>
+                </Label>
+            </Viewbox>
+            <StackPanel Grid.Row="1" HorizontalAlignment="Center" Orientation="Horizontal">
+                <Button Name="btnReset" Height="50" Background="Transparent" Click="btnReset_Click" Style="{StaticResource MyButton}">
+                    <Image Name="imgReset" Source="images/icon/white-reset.png"></Image>
+                </Button>
+                <Button Name="btnPlayPause" Background="Transparent" Click="btnPlayPause_Click" Style="{StaticResource MyButton}">
+                    <Image Name="imgPlayPause" Source="images/icon/white-play.png"></Image>
+                </Button>
+                <Button Name="btnSetTimer" Height="50" Background="Transparent" Click="btnSetTimer_Click" Style="{StaticResource MyButton}">
+                    <Image Name="imgSetTimer" Source="images/icon/white-set-timer.png"></Image>
+                </Button>
+            </StackPanel>
+        </Grid>
+
+        <Grid Grid.Row="2" HorizontalAlignment="Left"  VerticalAlignment="Center">
+            <Button Name="btnSettings" Background="Transparent" Click="btnSettings_Click">
+                <Image Source="images/icon/bg-settings.png"></Image>
+            </Button>
+        </Grid>
+    </Grid>
+</Window>
