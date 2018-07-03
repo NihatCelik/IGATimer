@@ -4,14 +4,20 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
-        ResizeMode="NoResize" WindowStartupLocation="CenterScreen" 
-        WindowStyle="None" AllowsTransparency="True" 
-        MouseDown="Window_MouseDown"
-        Title="MainWindow" Height="460" Width="800">
+        Title="MainWindow"
+        Width="800"
+        Height="460"
+        WindowStyle="None"
+        ResizeMode="NoResize"
+        AllowsTransparency="True"
+        WindowStartupLocation="CenterScreen"
+        MouseDown="Window_MouseDown">
 
     <Window.Resources>
         <Style x:Key="MyButton" TargetType="Button">
             <Setter Property="OverridesDefaultStyle" Value="True" />
+            <Setter Property="BorderBrush" Value="Transparent" />
+            <Setter Property="Background" Value="Transparent" />
             <Setter Property="Cursor" Value="Hand" />
             <Setter Property="Template">
                 <Setter.Value>
@@ -31,7 +37,7 @@
     </Window.Resources>
 
     <Window.Background>
-        <ImageBrush x:Name="imgBrush" Stretch="Fill"></ImageBrush>
+        <ImageBrush x:Name="imgBrush" Stretch="UniformToFill"/>
     </Window.Background>
 
     <Grid>
@@ -41,50 +47,56 @@
             <RowDefinition/>
         </Grid.RowDefinitions>
 
-
-        <Grid Grid.Row="0">
-            <StackPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Top">
-                <Button Name="btnMinimize" Height="24" Width="24" BorderBrush="Transparent" Background="Transparent"  Click="btnMinimize_Click"  Style="{StaticResource MyButton}">
-                    <Image Name="imgMinimize" Source="images/icon/minimize-white.png"></Image>
-                </Button>
-                <Button Name="btnMaximize" Height="24" Width="24" BorderBrush="Transparent" Background="Transparent" Click="btnMaximize_Click"  Style="{StaticResource MyButton}">
-                    <Image Name="imgMaximize" Source="images/icon/expand-button-white.png"></Image>
-                </Button>
-                <Button Name="btnClose" Height="24" Width="24" BorderBrush="Transparent" Background="Transparent"  Click="btnClose_Click"  Style="{StaticResource MyButton}">
-                    <Image Name="imgClose" Source="images/icon/cancel-button-white.png"></Image>
-                </Button>
-            </StackPanel>
-        </Grid>
+        <StackPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Top">
+            <Button Name="btnMinimize" Height="24" Width="24" Click="BtnMinimize_Click"  Style="{StaticResource MyButton}">
+                <Image Name="imgMinimize" Source="images/icon/minimize-white.png"/>
+            </Button>
+            <Button Name="btnMaximize" Height="24" Width="24" Click="BtnMaximize_Click"  Style="{StaticResource MyButton}">
+                <Image Name="imgMaximize" Source="images/icon/expand-button-white.png"/>
+            </Button>
+            <Button Name="btnClose" Height="24" Width="24" Click="BtnClose_Click"  Style="{StaticResource MyButton}">
+                <Image Name="imgClose" Source="images/icon/cancel-button-white.png"/>
+            </Button>
+        </StackPanel>
 
         <Grid Grid.Row="1">
             <Grid.RowDefinitions>
-                <RowDefinition Height="3*" />
+                <RowDefinition Height="3.5*" />
                 <RowDefinition />
             </Grid.RowDefinitions>
 
             <Viewbox Grid.Row="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-                <Label HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Content="00:00:00" Name="lblRemainingTime" FontFamily="Century Gothic" Foreground="White" FontWeight="Bold" Background="{x:Null}">
+                <Label Name="lblRemainingTime"
+                       HorizontalAlignment="Stretch"
+                       VerticalAlignment="Stretch"
+                       Content="00:00:00"
+                       FontFamily="Century Gothic"
+                       Foreground="White"
+                       FontSize="90"
+                       FontWeight="Bold"
+                       Background="{x:Null}">
                     <Label.Effect>
                         <DropShadowEffect Direction="-90" BlurRadius="1" Opacity="0.6" ShadowDepth="1" />
                     </Label.Effect>
                 </Label>
             </Viewbox>
-            <StackPanel Grid.Row="1" HorizontalAlignment="Center" Orientation="Horizontal">
-                <Button Name="btnReset" Height="50" Background="Transparent" Click="btnReset_Click" Style="{StaticResource MyButton}">
-                    <Image Name="imgReset" Source="images/icon/white-reset.png"></Image>
+            
+            <StackPanel Grid.Row="1" MaxHeight="75" HorizontalAlignment="Center" VerticalAlignment="Bottom" Orientation="Horizontal">
+                <Button Name="btnReset" Height="50" Click="BtnReset_Click" Style="{StaticResource MyButton}">
+                    <Image Name="imgReset" Source="images/icon/white-reset.png"/>
                 </Button>
-                <Button Name="btnPlayPause" Background="Transparent" Click="btnPlayPause_Click" Style="{StaticResource MyButton}">
-                    <Image Name="imgPlayPause" Source="images/icon/white-play.png"></Image>
+                <Button Name="btnPlayPause" Click="BtnPlayPause_Click" Margin="10,0" Style="{StaticResource MyButton}">
+                    <Image Name="imgPlayPause" Source="images/icon/play-white.png"/>
                 </Button>
-                <Button Name="btnSetTimer" Height="50" Background="Transparent" Click="btnSetTimer_Click" Style="{StaticResource MyButton}">
-                    <Image Name="imgSetTimer" Source="images/icon/white-set-timer.png"></Image>
+                <Button Name="btnSetTimer" Height="50" Click="BtnSetTimer_Click" Style="{StaticResource MyButton}">
+                    <Image Name="imgSetTimer" Source="images/icon/white-set-timer.png"/>
                 </Button>
             </StackPanel>
         </Grid>
 
-        <Grid Grid.Row="2" HorizontalAlignment="Left"  VerticalAlignment="Center">
-            <Button Name="btnSettings" Background="Transparent" Click="btnSettings_Click">
-                <Image Source="images/icon/bg-settings.png"></Image>
+        <Grid Grid.Row="2" HorizontalAlignment="Left"  VerticalAlignment="Bottom" MaxHeight="50" Height="50" Margin="35,0,0,35" Width="50">
+            <Button Name="btnSettings" Click="BtnSettings_Click" Style="{StaticResource MyButton}">
+                <Image Name="imgSettings" Source="images/icon/bg-settings-white.png"/>
             </Button>
         </Grid>
     </Grid>

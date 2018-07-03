@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace IGATimer
+﻿namespace IGATimer
 {
     class Session
     {
@@ -16,7 +10,7 @@ namespace IGATimer
 
         public static string BgColorCode { get; set; } = "#26a6f2";
 
-        public static bool IsBgColor { get; set; } = true;
+        public static bool IsBgColor { get; set; } = false;
 
         public static bool IsButtonColorBlack { get; set; } = false;
 

@@ -6,17 +6,20 @@
              xmlns:local="clr-namespace:IGATimer"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
+    
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*" />
             <ColumnDefinition Width="13" />
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="13" />
-            <RowDefinition Height="13" />
+            <RowDefinition Height="15" />
+            <RowDefinition Height="15" />
         </Grid.RowDefinitions>
-        <TextBox Name="NUDTextBox"  Grid.Column="0" Grid.Row="0" Grid.RowSpan="2" TextAlignment="Right" PreviewKeyDown="NUDTextBox_PreviewKeyDown" PreviewKeyUp="NUDTextBox_PreviewKeyUp" TextChanged="NUDTextBox_TextChanged"/>
-        <RepeatButton Name="NUDButtonUP"  Grid.Column="1" Grid.Row="0" FontSize="8" FontFamily="Marlett" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Click="NUDButtonUP_Click">5</RepeatButton>
-        <RepeatButton Name="NUDButtonDown"  Grid.Column="1" Grid.Row="1" FontSize="8"  FontFamily="Marlett" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Height="13" VerticalAlignment="Bottom" Click="NUDButtonDown_Click">6</RepeatButton>
+        
+        <TextBox Name="NUDTextBox"  Grid.Column="0" Grid.Row="0" Grid.RowSpan="2" FontSize="20" TextAlignment="Right" PreviewKeyDown="NUDTextBox_PreviewKeyDown" PreviewKeyUp="NUDTextBox_PreviewKeyUp" TextChanged="NUDTextBox_TextChanged"/>
+        
+        <RepeatButton Name="NUDButtonUP" Grid.Column="1" Grid.Row="0" FontSize="8" FontFamily="Marlett" HorizontalAlignment="Stretch" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Click="NUDButtonUP_Click">5</RepeatButton>
+        <RepeatButton Name="NUDButtonDown"  Grid.Column="1" Grid.Row="1" FontSize="8"  FontFamily="Marlett"  HorizontalAlignment="Stretch" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Height="13" VerticalAlignment="Bottom" Click="NUDButtonDown_Click">6</RepeatButton>
     </Grid>
 </UserControl>

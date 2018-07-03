@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:IGATimer"
         mc:Ignorable="d"
         Title="Zaman Ayarla" Height="250" Width="400" WindowStartupLocation="CenterScreen">
-    <Grid>
+    <Grid Margin="20">
         <Grid.RowDefinitions>
             <RowDefinition Height="1*"/>
             <RowDefinition/>
@@ -21,6 +21,6 @@
         <Label Grid.Row="0" Grid.Column="1" Content="Dakika" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="40" FontFamily="Century Gothic"></Label>
         <local:NumericUpDown x:Name="nudHours" VerticalAlignment="Center" Grid.Row="1" Grid.Column="0"></local:NumericUpDown>
         <local:NumericUpDown x:Name="nudMinutes" VerticalAlignment="Center" Grid.Row="1" Grid.Column="1"></local:NumericUpDown>
-        <Button Grid.Row="2" Grid.ColumnSpan="2" Name="btnSetTimer" Content="Ayarla" FontSize="30"  Background="White" BorderBrush="Black" Click="btnSetTimer_Click"></Button>
+        <Button Grid.Row="2" Cursor="Hand" Grid.ColumnSpan="2" Name="btnSetTimer" Content="Ayarla" FontSize="30" Background="White" BorderBrush="Black" Click="btnSetTimer_Click"></Button>
     </Grid>
 </Window>

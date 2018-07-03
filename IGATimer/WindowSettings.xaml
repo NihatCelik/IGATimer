@@ -8,7 +8,7 @@
         mc:Ignorable="d"
         Margin="20"
         WindowStartupLocation="CenterScreen"
-        Title="Settings" Height="300" Width="400">
+        Title="Settings" Width="400" Height="325">
     <Window.Resources>
         <Style x:Key="MyButton" TargetType="RadioButton" >
             <Setter Property="Template" >
@@ -37,56 +37,54 @@
         </Style>
     </Window.Resources>
 
-    <Grid>
-        <Grid>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="4*"/>
-                <RowDefinition Height="2*"/>
-                <RowDefinition Height="2*"/>
-                <RowDefinition Height="1*"/>
-            </Grid.RowDefinitions>
+    <Grid Margin="20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="4*"/>
+            <RowDefinition Height="2*"/>
+            <RowDefinition Height="2*"/>
+            <RowDefinition Height="1*"/>
+        </Grid.RowDefinitions>
 
-            <Grid Grid.Row="0" VerticalAlignment="Top">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition/>
-                    <ColumnDefinition/>
-                    <ColumnDefinition/>
-                    <ColumnDefinition/>
-                </Grid.ColumnDefinitions>
+        <Grid Grid.Row="0" VerticalAlignment="Top">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
 
-                <RadioButton Name="rbBg1" Grid.Row="0" Grid.Column="0" Margin="5 0 5 5" Height="100" GroupName="bg" Style="{StaticResource MyButton}">
-                    <Image Source="images/bg/bg1.jpg" Stretch="UniformToFill"/>
-                </RadioButton>
-                <RadioButton Name="rbBg2" Grid.Row="0" Grid.Column="1" Margin="0 0 5 5" Height="100" GroupName="bg" Style="{StaticResource MyButton}">
-                    <Image Source="images/bg/bg2.jpg" Stretch="UniformToFill" />
-                </RadioButton>
-                <RadioButton Name="rbBg3" Grid.Row="0" Grid.Column="2" Margin="0 0 5 5" Height="100" GroupName="bg" Style="{StaticResource MyButton}">
-                    <Image Source="images/bg/bg3.jpg" Stretch="UniformToFill"/>
-                </RadioButton>
+            <RadioButton Name="rbBg1" Grid.Row="0" Grid.Column="0" Margin="5 0 5 5" Height="100" GroupName="bg" Style="{StaticResource MyButton}">
+                <Image Source="images/bg/bg1.jpg" Stretch="UniformToFill"/>
+            </RadioButton>
+            <RadioButton Name="rbBg2" Grid.Row="0" Grid.Column="1" Margin="0 0 5 5" Height="100" GroupName="bg" Style="{StaticResource MyButton}">
+                <Image Source="images/bg/bg2.jpg" Stretch="UniformToFill" />
+            </RadioButton>
+            <RadioButton Name="rbBg3" Grid.Row="0" Grid.Column="2" Margin="0 0 5 5" Height="100" GroupName="bg" Style="{StaticResource MyButton}">
+                <Image Source="images/bg/bg3.jpg" Stretch="UniformToFill"/>
+            </RadioButton>
 
-                <Button Grid.Row="0" Grid.Column="3" Name="btnCheckRbColorCode" Margin="0 0 5 0" Background="Transparent" Click="btnCheckRbColorCode_Click">
-                    <StackPanel Name="spHexColorCode">
-                        <TextBlock Text="Renk Kodu (Hex)"></TextBlock>
-                        <TextBox Name="txtBgColorCode" Text="#000" TextChanged="txtBgColorCode_TextChanged"></TextBox>
-                        <Image Name="imgErrorBgColorCode" Source="images/icon/cancel-button.png" Height="30" Margin="8" Visibility="Hidden"></Image>
-                        <RadioButton Name="rbBgColorCode" GroupName="bg" Style="{StaticResource MyButton}"></RadioButton>
-                    </StackPanel>
-                </Button>
-            </Grid>
-
-
-            <StackPanel Grid.Row="1">
-                <Label FontWeight="Bold">Resim Rengi</Label>
-                <RadioButton Name="rbButtonColorBlack" Content="Siyah" GroupName="ButtonColor"></RadioButton>
-                <RadioButton Name="rbButtonColorWhite" Content="Beyaz" GroupName="ButtonColor"></RadioButton>
-            </StackPanel>
-
-            <StackPanel Grid.Row="2">
-                <Label FontWeight="Bold" Name="lblFontColor" Content="Yazı Rengi"></Label>
-                <TextBox Name="txtFontColorCode" Text="#000"></TextBox> 
-            </StackPanel>
-
-            <Button Grid.Row="3" Name="btnSave" Content="Ayarla"  FontSize="18" Background="White" Click="btnSave_Click"></Button>
+            <Button Grid.Row="0" Grid.Column="3" Name="btnCheckRbColorCode" Margin="0 0 5 0" Background="Transparent" Click="btnCheckRbColorCode_Click">
+                <StackPanel Name="spHexColorCode">
+                    <TextBlock Text="Renk Kodu (Hex)"></TextBlock>
+                    <TextBox Name="txtBgColorCode" Text="#000" TextChanged="txtBgColorCode_TextChanged"></TextBox>
+                    <Image Name="imgErrorBgColorCode" Source="images/icon/cancel-button.png" Height="30" Margin="8" Visibility="Hidden"></Image>
+                    <RadioButton Name="rbBgColorCode" GroupName="bg" Style="{StaticResource MyButton}"></RadioButton>
+                </StackPanel>
+            </Button>
         </Grid>
+
+
+        <StackPanel Grid.Row="1">
+            <Label FontWeight="Bold">Resim Rengi</Label>
+            <RadioButton Name="rbButtonColorBlack" Content="Siyah" GroupName="ButtonColor"></RadioButton>
+            <RadioButton Name="rbButtonColorWhite" Content="Beyaz" GroupName="ButtonColor"></RadioButton>
+        </StackPanel>
+
+        <StackPanel Grid.Row="2">
+            <Label FontWeight="Bold" Name="lblFontColor" Content="Yazı Rengi"></Label>
+            <TextBox Name="txtFontColorCode" Text="#000"></TextBox> 
+        </StackPanel>
+
+        <Button Grid.Row="3" Cursor="Hand" Name="btnSave" Content="Ayarla"  FontSize="18" Background="White" Click="btnSave_Click"></Button>
     </Grid>
 </Window>

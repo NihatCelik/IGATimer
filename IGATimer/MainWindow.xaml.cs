@@ -1,17 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using System.Windows.Threading;
 
 namespace IGATimer
@@ -27,11 +19,13 @@ namespace IGATimer
     /// </summary>
     public partial class MainWindow : Window
     {
-        TimeSpan lastSetUserTime;
+        TimeSpan LastCountdown { get; set; }
         TimerState timerState;
         DateTime timerTime;
         DispatcherTimer timer1 = new DispatcherTimer();
-        Brush defaultBrush;
+        Brush DefaultBackgroundBrush { get; set; }
+        Brush PreviousForegroundBrush { get; set; }
+        Brush halfTimeBrush = new SolidColorBrush(Color.FromRgb(255, 50, 50));
 
         BrushConverter bc;
         public MainWindow()
@@ -40,22 +34,35 @@ namespace IGATimer
             timer1.Interval = TimeSpan.FromMilliseconds(1);
             timer1.Tick += Timer1_Tick;
             timerState = TimerState.Play;
-            defaultBrush = this.Background;
-            bc = new BrushConverter();
-            this.Background = (Brush)bc.ConvertFrom(Session.BgColorCode);
+            DefaultBackgroundBrush = Background;
+            //bc = new BrushConverter();
+            //Background = (Brush)bc.ConvertFrom(Session.BgColorCode);
+            GetDefaultSettings();
         }
 
         private void Timer1_Tick(object sender, EventArgs e)
         {
             TimeSpan remainingTime = timerTime.Subtract(DateTime.Now);
-            if (remainingTime.TotalSeconds >= 0)
+
+            var halfTime = new TimeSpan(LastCountdown.Ticks / 2);
+
+            if (remainingTime < halfTime)
+            {
+                if (halfTimeBrush != lblRemainingTime.Foreground)
+                    PreviousForegroundBrush = lblRemainingTime.Foreground;
+                lblRemainingTime.Foreground = halfTimeBrush;
+            }
+
+            if (remainingTime.TotalSeconds > 0)
             {
                 lblRemainingTime.Content = remainingTime.ToString(@"hh\:mm\:ss");
             }
             else
             {
+                lblRemainingTime.Foreground = PreviousForegroundBrush;
+                timerState = TimerState.Play;
+                PlayPauseSetBackround();
                 timer1.IsEnabled = false;
-                MessageBox.Show("Süre Doldu!");
             }
         }
 
@@ -69,8 +76,8 @@ namespace IGATimer
                 frm.ShowDialog();
                 if (Session.IsSetTimer)
                 {
-                    lastSetUserTime = frm.Timer;
-                    lblRemainingTime.Content = lastSetUserTime.ToString();
+                    LastCountdown = frm.Timer;
+                    lblRemainingTime.Content = LastCountdown.ToString();
                     return;
                 }
             }
@@ -78,38 +85,38 @@ namespace IGATimer
             if (timerState == TimerState.Play)
             {
                 if (activeTime.TotalSeconds == 0) return;
-
-                imgPlayPause.Source = new BitmapImage(ResourceAccessor.Get("images/icon/white-pause.png"));
                 timerState = TimerState.Pause;
+                PlayPauseSetBackround();
                 timer1.IsEnabled = true;
-
                 timerTime = Convert.ToDateTime(DateTime.Now.Add(activeTime));
             }
             else
             {
-                imgPlayPause.Source = new BitmapImage(ResourceAccessor.Get("images/icon/white-play.png"));
                 timerState = TimerState.Play;
+                PlayPauseSetBackround();
                 timer1.IsEnabled = false;
             }
         }
 
-        private void btnReset_Click(object sender, RoutedEventArgs e)
+        private void BtnReset_Click(object sender, RoutedEventArgs e)
         {
-            lblRemainingTime.Content = lastSetUserTime.ToString(@"hh\:mm\:ss");
+            lblRemainingTime.Content = LastCountdown.ToString(@"hh\:mm\:ss");
             TimeSpan activeTime = TimeSpan.Parse(lblRemainingTime.Content.ToString());
             timerTime = Convert.ToDateTime(DateTime.Now.Add(activeTime));
+
             if (timerState == TimerState.Pause)
             {
+                GetDefaultSettings();
                 PlayPause();
             }
         }
 
-        private void btnPlayPause_Click(object sender, RoutedEventArgs e)
+        private void BtnPlayPause_Click(object sender, RoutedEventArgs e)
         {
             PlayPause();
         }
 
-        private void btnSetTimer_Click(object sender, RoutedEventArgs e)
+        private void BtnSetTimer_Click(object sender, RoutedEventArgs e)
         {
             SetTimer();
         }
@@ -125,19 +132,20 @@ namespace IGATimer
             WindowSetTimer frm = new WindowSetTimer(activeTime);
             Session.IsSetTimer = false;
             frm.ShowDialog();
+
             if (Session.IsSetTimer)
             {
-                lastSetUserTime = frm.Timer;
-                lblRemainingTime.Content = lastSetUserTime.ToString();
+                LastCountdown = frm.Timer;
+                lblRemainingTime.Content = LastCountdown.ToString();
             }
         }
 
-        private void btnMinimize_Click(object sender, RoutedEventArgs e)
+        private void BtnMinimize_Click(object sender, RoutedEventArgs e)
         {
             WindowState = WindowState.Minimized;
         }
 
-        private void btnMaximize_Click(object sender, RoutedEventArgs e)
+        private void BtnMaximize_Click(object sender, RoutedEventArgs e)
         {
             if (WindowState == WindowState.Maximized)
             {
@@ -151,7 +159,7 @@ namespace IGATimer
             }
         }
 
-        private void btnClose_Click(object sender, RoutedEventArgs e)
+        private void BtnClose_Click(object sender, RoutedEventArgs e)
         {
             Close();
         }
@@ -162,11 +170,17 @@ namespace IGATimer
                 this.DragMove();
         }
 
-        private void btnSettings_Click(object sender, RoutedEventArgs e)
+        private void BtnSettings_Click(object sender, RoutedEventArgs e)
         {
             WindowSettings frm = new WindowSettings();
             Session.IsSetColor = false;
             frm.ShowDialog();
+
+            GetDefaultSettings();
+        }
+
+        private void GetDefaultSettings()
+        {
             try
             {
                 if (Session.IsSetColor)
@@ -179,7 +193,7 @@ namespace IGATimer
                     else
                     {
                         bc = new BrushConverter();
-                        this.Background = defaultBrush;
+                        this.Background = DefaultBackgroundBrush;
                         string bgColor = Session.SelectedBgPath;
                         if (bgColor.Contains("bg1.jpg"))
                         {
@@ -207,6 +221,9 @@ namespace IGATimer
                     imgMinimize.Source = Session.IsButtonColorBlack
                         ? new BitmapImage(ResourceAccessor.Get("images/icon/minimize.png"))
                         : imgMinimize.Source = new BitmapImage(ResourceAccessor.Get("images/icon/minimize-white.png"));
+                    imgSettings.Source = Session.IsButtonColorBlack ?
+                        new BitmapImage(ResourceAccessor.Get("images/icon/bg-settings.png"))
+                        : imgSettings.Source = new BitmapImage(ResourceAccessor.Get("images/icon/bg-settings-white.png"));
 
                     if (Session.IsButtonColorBlack)
                     {
@@ -235,29 +252,7 @@ namespace IGATimer
                       new BitmapImage(ResourceAccessor.Get("images/icon/reset.png"))
                       : imgReset.Source = new BitmapImage(ResourceAccessor.Get("images/icon/white-reset.png"));
 
-
-                    if (Session.IsButtonColorBlack)
-                    {
-                        if (timerState == TimerState.Play)
-                        {
-                            imgPlayPause.Source = new BitmapImage(ResourceAccessor.Get("images/icon/play.png"));
-                        }
-                        else
-                        {
-                            imgPlayPause.Source = new BitmapImage(ResourceAccessor.Get("images/icon/pause.png"));
-                        }
-                    }
-                    else
-                    {
-                        if (timerState == TimerState.Play)
-                        {
-                            imgPlayPause.Source = new BitmapImage(ResourceAccessor.Get("images/icon/white-play.png"));
-                        }
-                        else
-                        {
-                            imgPlayPause.Source = new BitmapImage(ResourceAccessor.Get("images/icon/white-pause.png"));
-                        }
-                    }
+                    PlayPauseSetBackround();
 
                     imgSetTimer.Source = Session.IsButtonColorBlack ?
                       new BitmapImage(ResourceAccessor.Get("images/icon/set-timer.png"))
@@ -271,6 +266,32 @@ namespace IGATimer
             catch (Exception ex)
             {
                 System.Windows.Forms.MessageBox.Show(ex.Message);
+            }
+        }
+
+        private void PlayPauseSetBackround()
+        {
+            if (Session.IsButtonColorBlack)
+            {
+                if (timerState == TimerState.Play)
+                {
+                    imgPlayPause.Source = new BitmapImage(ResourceAccessor.Get("images/icon/play.png"));
+                }
+                else
+                {
+                    imgPlayPause.Source = new BitmapImage(ResourceAccessor.Get("images/icon/pause.png"));
+                }
+            }
+            else
+            {
+                if (timerState == TimerState.Play)
+                {
+                    imgPlayPause.Source = new BitmapImage(ResourceAccessor.Get("images/icon/play-white.png"));
+                }
+                else
+                {
+                    imgPlayPause.Source = new BitmapImage(ResourceAccessor.Get("images/icon/pause-white.png"));
+                }
             }
         }
     }
